@@ -32,8 +32,6 @@ function setup(){
         myArray[i].drawBubble();
     }
 
-
-
 }//end setup
 
 //list for mouse presses with the built-in p5 mousePressed method
@@ -45,15 +43,19 @@ function mousePressed(){
     console.log("mouse Pressed");
 
     //loop through myArray and check if mouse is in each Bubble
-    //console.log(myArray);
+
     var d;
     for( var i =0; i< myArray.length; i++){
         //myArray[i].x myArray[i].r
      d = dist(mouseX,mouseY,myArray[i].x,myArray[i].y);
-        console.log("distance",d);
+        //console.log("distance",d);
+
+        //check to see if the distance is less thsn the radius
+        //ie is the mouse in the bubble
+        if(d < myArray[i].r){
+            console.log("mouse in the bubble");
+        }
 
     }
-
-
 
 }//end of mousePressed
