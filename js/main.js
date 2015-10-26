@@ -25,7 +25,7 @@ function setup(){
 
     //add stuff to the array with a loop
 
-    for(var i =0; i <10; i++){
+    for(var i =0; i <100; i++){
 
         //add Bubbles to the array
         myArray[i] = new Bubble();
@@ -37,15 +37,23 @@ function setup(){
 }//end setup
 
 //list for mouse presses with the built-in p5 mousePressed method
+
 function mousePressed(){
+
+
     //check that this is working
     console.log("mouse Pressed");
 
     //loop through myArray and check if mouse is in each Bubble
     //console.log(myArray);
-
+    var d;
     for( var i =0; i< myArray.length; i++){
+        //myArray[i].x myArray[i].r
+     d = dist(mouseX,mouseY,myArray[i].x,myArray[i].y);
+        console.log("distance",d);
 
     }
+
+
 
 }//end of mousePressed
