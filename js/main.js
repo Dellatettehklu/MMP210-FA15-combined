@@ -15,6 +15,12 @@ function Bubble(){
     this.drawBubble = function(){
     ellipse(this.x,this.y,this.bubbleSize,this.bubbleSize);
     }
+
+    this.changeColor = function(){
+        fill("orange");
+        this.drawBubble();
+
+    }
 }// end of Bubble
 
 function setup(){
@@ -53,7 +59,7 @@ function mousePressed(){
         //check to see if the distance is less thsn the radius
         //ie is the mouse in the bubble
         if(d < myArray[i].r){
-            console.log("mouse in the bubble");
+            myArray[i].changeColor();// call the color change function
         }
 
     }
