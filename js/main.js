@@ -1,5 +1,5 @@
 //global variables
-
+  var myArray = []; // create blank array
 
 
 //Bubble Constructor
@@ -22,7 +22,7 @@ function setup(){
     var cnv = createCanvas(800,3000);
     cnv.parent("windows");
 
-    var myArray = []; // create blank array
+
     //add stuff to the array with a loop
 
     for(var i =0; i <10; i++){
@@ -32,18 +32,6 @@ function setup(){
         myArray[i].drawBubble();
     }
 
-    //log out the array
-    console.log(myArray);
-
-    //loop to go through every item in the array
-        for( var i =0; i< myArray.length; i++){
-
-            //myArray[i] +=10;
-            console.log(myArray[i]);
-        }
-
-
-    console.log(myArray);
 
 
 }//end setup
@@ -52,4 +40,12 @@ function setup(){
 function mousePressed(){
     //check that this is working
     console.log("mouse Pressed");
-}
+
+    //loop through myArray and check if mouse is in each Bubble
+    //console.log(myArray);
+
+    for( var i =0; i< myArray.length; i++){
+
+    }
+
+}//end of mousePressed
