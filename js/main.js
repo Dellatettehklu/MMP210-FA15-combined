@@ -11,9 +11,10 @@ function Bubble(){
     this.bubbleSize = this.r;//width and height are twice the radius
 
 
-    //draw the bubble
+    //method: draw the bubble
+    this.drawBubble = function(){
     ellipse(this.x,this.y,this.bubbleSize,this.bubbleSize);
-
+    }
 }// end of Bubble
 
 function setup(){
@@ -26,9 +27,11 @@ function setup(){
 
     for(var i =0; i <10; i++){
 
-        //addBubbles to the array
+        //add Bubbles to the array
         myArray[i] = new Bubble();
+        myArray[i].drawBubble();
     }
+
     //log out the array
     console.log(myArray);
 
@@ -45,3 +48,8 @@ function setup(){
 
 }//end setup
 
+//list for mouse presses with the built-in p5 mousePressed method
+function mousePressed(){
+    //check that this is working
+    console.log("mouse Pressed");
+}
