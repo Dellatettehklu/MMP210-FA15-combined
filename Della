@@ -1,0 +1,105 @@
+var color1,color2,color3;
+var colors;
+//var colorIndex;
+//var myArray = [];
+
+
+function setup(){
+
+    var cnv = createCanvas(1200,850);
+    cnv.parent("Diamonds");
+
+    background('gainsboro');
+    color1=color('black');
+    colors=[color('black'),color('aquamarine'), color('pink'), color('blue'), color('violet'), color('red'),               color('orange'),color('darkgreen'),color('darkorchid'),color('deeppink')]
+    // draw a diamond
+    drawDiamonds();
+}
+
+function drawDiamonds(){
+    var altRow =true;
+    var c=0;
+    var x=20;
+    var y=60;
+for(var i=0; i<100; i++ ){
+// drawDiamond(x,y, color1);
+    drawDiamond(x,y, colors[c]);
+    
+    x+=100;
+    c++;
+    
+    if(c>=colors.length){
+        c=0;
+    }
+    
+    if(x > width){
+        y+=140;
+        
+       if(altRow){
+        x=0;
+        altRow = false;
+       }
+        else{
+            x = 30;
+            altRow = true;
+            
+        }
+    }   
+    }
+
+}
+
+function drawDiamond(startX1,startY1,fillColor){
+
+    // drawing diamond
+    fill(fillColor);
+    noStroke();
+    triangle(startX1,startY1,startX1+31,startY1-50,startX1+61,startY1);
+    rect(startX1,startY1,61,30);
+    triangle(startX1,startY1+30,startX1+31,startY1+80,startX1+61,startY1+30);
+
+//    triangle(30,80,60,20,90,80);
+//    rect(30,75,59,30);
+//    triangle(30,105,60,160,90,105);
+
+//    //drawing of second diamond
+//    fill(127,255,212);
+//    noStroke();
+//    triangle(110,75,140,20,170,75);
+//
+//    fill(127,255,212);
+//    noStroke();
+//    rect(109,75,61,25);
+//
+//    fill(127,255,212);
+//    noStroke();
+//    triangle(110,100,140,140,170,100);
+//
+//    //drawing of third diamond
+//
+//    fill(255,20,147);
+//    noStroke();
+//    triangle(190,75,220,20,250,75);
+//
+//    fill(255,20,147);
+//    noStroke();
+//    rect(189,75,61,25);
+//
+//    fill(255,20,147);
+//    noStroke();
+//    triangle(190,100,220,140,250,100);
+
+}
+
+//function mousePressed(){
+    //var d;
+    //for(var i=0; i< myArray.length; i++);
+    //d = dist(mouseX,mouseY,myArray[i].x,myArray[i].y);
+       //console.log("distance",d);
+    
+    
+    
+    
+    
+    
+    
