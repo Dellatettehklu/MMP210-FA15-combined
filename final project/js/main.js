@@ -1,38 +1,44 @@
 // sketch.js
-// fftSize must be at least 32
-// and a power of 2 (32,64,128,256 etc.)
-fftSize = 2048
+// fftSize must be at least 32, and a power of 2 (32,64,128,256 etc.)
+var fftSize = 32
 
 function setup() {
   createCanvas( windowWidth, windowHeight )
 
-  pwm =  PWM()
-  mod  =  Sine( 4, 40 )._
-  pwm.frequency = Add( 440, mod )
+  drums = EDrums('x*o*x*o-')
+  drums.amp = .75
+
+  bass = FM('bass')
+    .note.seq( [0,0,0,7,14,13].rnd(), [1/8,1/16].rnd(1/16,2) )
+
+  rhodes = Synth( 'rhodes', {amp:.35} )
+    .chord.seq( Rndi(0,6,3), 1 )
+    .fx.add( Delay() )
 
   fft = FFT( fftSize )
-  waveform = new Uint8Array( fft.frequencyBinCount )
 
-  frameRate( 30 )
-  strokeWeight( 1 )
+  Gibber.scale.root.seq( ['c4','ab3','bb3'], [4,2,2] )
+  Gibber.scale.mode.seq( ['Minor','Mixolydian'], [6,2] )
+
+  noStroke()
+  colorMode( HSB, 255 )
 }
 
-// adapted from: 
-// http://p5js.org/learn/examples/Sound_Oscillator_Frequency.php
 function draw() {
-  background()
+  background( 64 )
 
-  fft.getByteTimeDomainData( waveform )
+  var numBars = fftSize / 2,
+      barHeight = ( height - 1 ) / numBars,
+      barColor = null, 
+      value = null
 
-  beginShape()
-  for ( var i = 0; i < waveform.length; i++ ){
-    var x = map( i, 0, waveform.length, 0, width )
-    var y = map( waveform[i], 0, 255, height, 0 )
-    vertex( x, y )
+  for( var i = 0; i < numBars; i++ ) {
+    barColor = color( ( i / numBars ) * 255, 255, 255 )
+    fill( barColor ) 
+
+    // read FFT value, which ranges from 0-255, and scale it.
+    value = ( fft[ i ] / 255 ) * width
+
+    rect( 0, barHeight * i, value, barHeight )
   }
-  endShape()
-
-  mod.frequency  = map( mouseY, 0, height, .25, 10 )
-  mod.amp        = map( mouseX, 0, width, 4, 100 )
-  pwm.pulsewidth = map( mouseX, 0, width, 0, 1 )
 }
