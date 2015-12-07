@@ -1,6 +1,7 @@
 // sketch.js
 // fftSize must be at least 32, and a power of 2 (32,64,128,256 etc.)
 var fftSize = 32
+var mic;
 
 function setup() {
   createCanvas( windowWidth, windowHeight )
@@ -22,10 +23,15 @@ function setup() {
 
   noStroke()
   colorMode( HSB, 255 )
+  
+  mic = new p5.AudioIn()
+  mic.start();
 }
 
 function draw() {
   background( 64 )
+  
+  micLevel = mic.getLevel();
 
   var numBars = fftSize / 2,
       barHeight = ( height - 1 ) / numBars,
@@ -33,7 +39,7 @@ function draw() {
       value = null
 
   for( var i = 0; i < numBars; i++ ) {
-    barColor = color( ( i / numBars ) * 255, 255, 255 )
+    barColor = color( ( i / numBars ) * 255,255, 255)
     fill( barColor ) 
 
     // read FFT value, which ranges from 0-255, and scale it.
