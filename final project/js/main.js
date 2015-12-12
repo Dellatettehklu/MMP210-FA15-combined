@@ -1,50 +1,125 @@
-// sketch.js
-// fftSize must be at least 32, and a power of 2 (32,64,128,256 etc.)
-var fftSize = 32
 var mic;
+var mysound;
+var playbutton;
+var stopbutton;
+var r;
+
+//var rX, rY, rW, rH;
+//var cX, cY, CS;
+//var tX, tY, tS;
+
+//var count = 0;
+
+
+function preload(){
+    mysound = loadSound('Smooth.mp3');
+    
+    
+}
 
 function setup() {
-  createCanvas( windowWidth, windowHeight )
+  createCanvas(1000, 600 );
+    
+    r = new spiral(300);
+    
+    //rX = width/3;
+	//rY = height/4;
+	//rW = 100;
+	//rH = 100;
+	
+	//cX = width/2;
+	//cY = height/4;
+	cS = 100;
+	
+	//tX = 2*width/3;
+	//tY = height/4;
+	//tS = 100;
 
-  drums = EDrums('x*o*x*o-')
-  drums.amp = .75
+    
 
-  bass = FM('bass')
-    .note.seq( [0,0,0,7,14,13].rnd(), [1/8,1/16].rnd(1/16,2) )
-
-  rhodes = Synth( 'rhodes', {amp:.35} )
-    .chord.seq( Rndi(0,6,3), 1 )
-    .fx.add( Delay() )
-
-  fft = FFT( fftSize )
-
-  Gibber.scale.root.seq( ['c4','ab3','bb3'], [4,2,2] )
-  Gibber.scale.mode.seq( ['Minor','Mixolydian'], [6,2] )
-
-  noStroke()
-  colorMode( HSB, 255 )
+    
+  // play button
+  playbutton = createButton('Play');
+  playbutton.position(55, 55);
+  playbutton.mousePressed(playsound);
   
-  mic = new p5.AudioIn()
+  // stop button
+  stopbutton = createButton('Stop');
+  stopbutton.position(105, 55);
+  stopbutton.mousePressed(stopsound);
+    
+ mic = new p5.AudioIn();
   mic.start();
 }
 
-function draw() {
-  background( 64 )
+function draw()
+{
+  background(255,0,255);
+  r.draw();
+  r.move();
   
-  micLevel = mic.getLevel();
+    micLevel = mic.getLevel();
+}
 
-  var numBars = fftSize / 2,
-      barHeight = ( height - 1 ) / numBars,
-      barColor = null, 
-      value = null
-
-  for( var i = 0; i < numBars; i++ ) {
-    barColor = color( ( i / numBars ) * 255,255, 255)
-    fill( barColor ) 
-
-    // read FFT value, which ranges from 0-255, and scale it.
-    value = ( fft[ i ] / 255 ) * width
-
-    rect( 0, barHeight * i, value, barHeight )
+function spiral() { 
+    var xpos = width/2;
+    var ypos = height/2;
+    var xspeed = 2;
+  
+  this.move = function () {
+    xpos = xpos + xspeed + y;
+    if (xpos > width) {
+      xpos = 0;
+    }
+    if (xpos < 0) {
+      xpos = width;
+    }
   }
+  
+  this.draw = function () {
+noStroke();
+fill(185, 244, 255);
+translate(width/2, height/2);
+for (var i = 0; i< 300; i++) {
+rotate(0.1);
+ellipse(i, 0, 10, 10);
+}
+
+      noStroke();
+fill( 255, 211, 242);
+for (var i = 0; i< 300; i++) {
+rotate(0.1);
+ellipse(i, 0, 10, 10);
+}
+      
+noStroke();
+fill( 252, 252, 191);
+for (var i = 0; i< 300; i++) {
+rotate(0.1);
+ellipse(i, 0, 10, 10);
+}
+}
+}
+ 
+ function mouseDragged() 
+{
+  value = value + 5;
+  if (value > 300) {
+    value = 0;
+}
+}
+function playsound() 
+{
+  if(mysound.isPlaying() == false) 
+  {
+    mysound.play();
+  } 
+}
+ 
+function stopsound() 
+{
+  if(mysound.isPlaying() == true) 
+  {
+    mysound.pause();
+  } 
 }
