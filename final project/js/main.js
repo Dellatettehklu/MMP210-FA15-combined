@@ -3,42 +3,48 @@ var mysound;
 var playbutton;
 var stopbutton;
 var r;
-
-//var rX, rY, rW, rH;
-//var cX, cY, CS;
-//var tX, tY, tS;
-
-//var count = 0;
+var r2;
+var r3;
 
 
-function preload(){
-    mysound = loadSound('Smooth.mp3');
+
+//function preload(){
+   // mysound = loadSound('Smooth.mp3');
     
     
-}
+//}
 
 function setup() {
-  createCanvas(1000, 600 );
+  createCanvas(1000, 800 );
+    frameRate(30);
     
     r = new spiral(300);
+    r2 = new spiral(-100);
+    r3 = new spiral(-250);
     
-    //rX = width/3;
-	//rY = height/4;
-	//rW = 100;
-	//rH = 100;
-	
-	//cX = width/2;
-	//cY = height/4;
-	cS = 100;
-	
-	//tX = 2*width/3;
-	//tY = height/4;
-	//tS = 100;
+    
+  
+ loadJSON('sample.json',jsonLoaded);
+    
+ mic = new p5.AudioIn();
+  mic.start();
+}
+function soundLoaded(){
+    
+showButton();
+    
+}
+function jsonLoaded(data){
+    sounds = data.soundFiles;
+    cursound = 0;
+    mysound = loadSound(sounds[cursound],soundLoaded);
+        
+}
 
+function showButton(){
     
-
     
-  // play button
+    // play button
   playbutton = createButton('Play');
   playbutton.position(55, 55);
   playbutton.mousePressed(playsound);
@@ -47,67 +53,74 @@ function setup() {
   stopbutton = createButton('Stop');
   stopbutton.position(105, 55);
   stopbutton.mousePressed(stopsound);
-    
- mic = new p5.AudioIn();
-  mic.start();
 }
-
 function draw()
 {
   background(255,0,255);
   r.draw();
   r.move();
   
+  //r2.draw();
+  r2.move();
+    
+ // r3.draw();
+  r3.move();
+  
     micLevel = mic.getLevel();
 }
 
 function spiral() { 
     var xpos = width/2;
-    var ypos = height/2;
-    var xspeed = 2;
+    xpos = 0;
+   var ypos = height/2;
+   var xspeed = 2;
+    this.x = xpos;
+    this.y = 0;
+    this.xspeed = 1;
+    this.spinspeed = 0.1;
   
   this.move = function () {
-    xpos = xpos + xspeed + y;
-    if (xpos > width) {
-      xpos = 0;
+    //xpos = xpos + xspeed + y;
+      this.x = this.x+ this.xspeed;
+    if (this.x > width - 200) {
+            this.x = -150;
     }
-    if (xpos < 0) {
-      xpos = width;
+    if (this.x < 0) {
+          this.x = width-200;
+    //this.spinAmount = 0.1;
     }
   }
   
   this.draw = function () {
+      push();
+translate(this.x, this.y);
+this.spinspeed+=0.001;
 noStroke();
 fill(185, 244, 255);
 translate(width/2, height/2);
 for (var i = 0; i< 300; i++) {
-rotate(0.1);
+rotate(this.spinspeed);
 ellipse(i, 0, 10, 10);
 }
 
       noStroke();
 fill( 255, 211, 242);
 for (var i = 0; i< 300; i++) {
-rotate(0.1);
+rotate(this.spinspeed);
 ellipse(i, 0, 10, 10);
 }
       
 noStroke();
 fill( 252, 252, 191);
 for (var i = 0; i< 300; i++) {
-rotate(0.1);
+rotate(this.spinspeed);
 ellipse(i, 0, 10, 10);
 }
-}
+pop();      
+}  
 }
  
- function mouseDragged() 
-{
-  value = value + 5;
-  if (value > 300) {
-    value = 0;
-}
-}
+ 
 function playsound() 
 {
   if(mysound.isPlaying() == false) 
