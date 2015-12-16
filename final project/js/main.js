@@ -24,10 +24,10 @@ function setup() {
     
     
   
- loadJSON('sample.json',jsonLoaded);
+ loadJSON('js/data/sample.json',jsonLoaded);
     
  mic = new p5.AudioIn();
-  mic.start();
+ mic.start();
 }
 function soundLoaded(){
     
@@ -60,11 +60,11 @@ function draw()
   r.draw();
   r.move();
   
-  //r2.draw();
-  r2.move();
+  r2.draw();
+  //r2.move();
     
- // r3.draw();
-  r3.move();
+  r3.draw();
+  //r3.move();
   
     micLevel = mic.getLevel();
 }
