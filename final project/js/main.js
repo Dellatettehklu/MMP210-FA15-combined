@@ -6,9 +6,9 @@ var stopbutton;
 var r;
 var r2;
 var r3;
-var r4;
-var songPlaying;
 
+var songPlaying;
+var colorIndex;
 
 
 
@@ -19,9 +19,10 @@ function setup() {
     
     //creating variables for each spiral.
     r = new spiral(300);
-    r2 = new spiral(-100);
-    r3 = new spiral(-150);
-    r4 = new spiral(-50);
+    r2 = new spiral(-150);
+    r3 = new spiral(-100);
+   
+     colorIndex = color(random(255), random(255),random(255));
 
     songPlaying = false;
 
@@ -54,11 +55,6 @@ function jsonLoaded(data) {
 
 //This function checks to see if mysound is playing.
 function checkSound() {
-//console.log('songOver');
-//    cursound += 1;
-//    console.log('cursound',cursound);
-//    mysound.clearCues();
-//    mysound = loadSound(sounds[cursound], soundLoaded);
 
    console.log('songPlaying', songPlaying);
     if (songPlaying) {
@@ -107,8 +103,7 @@ function draw() {
     r3.draw();
     r3.move();
 
-     r4.draw();
-    r4.move();
+    
     
     checkSound();
 
@@ -146,7 +141,7 @@ function spiral(xpos) {
         translate(this.x, this.y);
         this.spinspeed += 0.0001;
         noStroke();
-        fill(185, 244, 255);
+        fill(colorIndex);
         translate(width / 2, height / 2);
         for (var i = 0; i < 300; i++) {
             rotate(this.spinspeed);
