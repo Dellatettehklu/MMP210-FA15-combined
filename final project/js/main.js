@@ -1,3 +1,4 @@
+//creating  global variables. 
 var mic;
 var mysound;
 var playbutton;
@@ -10,16 +11,13 @@ var songPlaying;
 
 
 
-//function preload(){
-// mysound = loadSound('Smooth.mp3');
 
-
-//}
-
+// create the setup function.
 function setup() {
-    createCanvas(1000, 800);
+    createCanvas(1200, 850);
     frameRate(30);
-
+    
+    //creating variables for each spiral.
     r = new spiral(300);
     r2 = new spiral(-100);
     r3 = new spiral(-150);
@@ -27,31 +25,34 @@ function setup() {
 
     songPlaying = false;
 
-
+    // creating a callback for the json file.
     loadJSON('js/data/sample.json', jsonLoaded);
 
+   //get audio from an input.
     mic = new p5.AudioIn();
     mic.start();
-}
+    
+}// end of setup.
 
 function soundLoaded() {
     console.log('soundLoaded');
     showButton();
-//    console.log(mysound.duration,'mysound.duration');
-//    mysound.addCue(mysound.duration, songOver);
+
     if (songPlaying) {
         mysound.play();
     }
 
-}
+} //end of soundLoaded.
 
+//create a  callback function 
 function jsonLoaded(data) {
     sounds = data.soundFiles;
     cursound = 0;     
     mysound = loadSound(sounds[cursound], soundLoaded);
 
-}
+} //end of function jsonLoaded.
 
+//This function checks to see if mysound is playing.
 function checkSound() {
 //console.log('songOver');
 //    cursound += 1;
@@ -76,21 +77,24 @@ function checkSound() {
                songPlaying = false;
          }
        }
-}
+} // end of checkSound.
 
+//create a function for the play and stop buttons.
 function showButton() {
 
 
     // play button
     playbutton = createButton('Play');
-    playbutton.position(55, 55);
+    playbutton.position(105, 105);
     playbutton.mousePressed(playsound);
 
     // stop button
     stopbutton = createButton('Stop');
-    stopbutton.position(105, 55);
+    stopbutton.position(175, 105);
     stopbutton.mousePressed(stopsound);
-}
+    
+} //end of showButton function.
+
 
 function draw() {
     background(255, 0, 255);
@@ -105,12 +109,15 @@ function draw() {
 
      r4.draw();
     r4.move();
+    
     checkSound();
 
+    //measure the volume by using getLevel.
     micLevel = mic.getLevel();
 }
 
 function spiral(xpos) {
+    //create variables using objects.
     this.xpos = width / 2;
     this.xpos = 0;
     this.ypos = height / 2;
@@ -129,7 +136,7 @@ function spiral(xpos) {
         }
         if (this.x < -150) {
             this.x = width - 200;
-            //this.spinAmount = 0.1;
+            
         }
 
     }
@@ -162,20 +169,21 @@ function spiral(xpos) {
             ellipse(i, 0, 10, 10);
         }
         pop();
-    }
-}
+    } // end of draw function.
+} // end of function spiral.
 
-
+//playsound function checks to see if mysound is playing.
 function playsound() {
     if (mysound.isPlaying() == false) {
         mysound.play();
         songPlaying = true;
     }
-}
+}// end of playsound.
 
+//playsound function checks to see if mysound is paused..
 function stopsound() {
     if (mysound.isPlaying() == true) {
         mysound.pause();
         songPlaying = false;
     }
-}
+} // end of stopsound.
