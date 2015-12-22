@@ -14,7 +14,7 @@ var colorIndex;
 
 // create the setup function.
 function setup() {
-    createCanvas(1200, 850);
+    createCanvas(1200, 800);
     frameRate(30);
     
     //creating variables for each spiral.
@@ -126,20 +126,24 @@ function spiral(xpos) {
     this.move = function () {
         //xpos = xpos + xspeed + y;
         this.x = this.x + this.xspeed + this.y;
-        if (this.x > width - 200) {
-            this.x = -150;
+        if (this.x > width - 100) {
+            this.x = -120;
         }
-        if (this.x < -150) {
-            this.x = width - 200;
+        if (this.x < -120) {
+            this.x = width - 100;
             
         }
 
     }
+    
+   
+ 
 
+    
     this.draw = function () {
         push();
         translate(this.x, this.y);
-        this.spinspeed += 0.0001;
+        this.spinspeed += 0.0002;
         noStroke();
         fill(colorIndex);
         translate(width / 2, height / 2);
